@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'consul_sd'
+    consul_sd_configs:
+      - server: '<consul_ip_address>:8500'
+        services:
+          - 'node-exporter'
+    relabel_configs:
+      - source_labels: [__meta_consul_tags]
+        target_label: job
+      - source_labels: [__meta_consul_service]
+        target_label: job
