@@ -56,7 +56,7 @@ docker run -d \
  --net=host \
  --volume=/var/run/docker.sock:/tmp/docker.sock \
  gliderlabs/registrator:latest \
- -ip="<Local_IP_Address>" \
+ -ip="$(ip -4 addr show eth0| grep -Po 'inet \K[\d.]+')" \
  consul://<Consul_IP_Address>:8500
 
 ```
